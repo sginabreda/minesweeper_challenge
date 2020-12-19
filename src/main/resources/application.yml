@@ -1,1 +1,9 @@
-
+spring:
+  profiles:
+    active: local
+logging:
+  level:
+    ROOT: info
+server:
+  servlet:
+    context-path: "/api"
