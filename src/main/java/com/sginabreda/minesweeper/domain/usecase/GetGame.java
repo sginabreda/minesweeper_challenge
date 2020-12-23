@@ -1,10 +1,17 @@
 package com.sginabreda.minesweeper.domain.usecase;
 
-import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
+import com.sginabreda.minesweeper.domain.entity.Game;
+import com.sginabreda.minesweeper.infrastructure.repository.GameRepository;
 
 public class GetGame {
 
-	public GameDto execute(Long gameId) {
-		return new GameDto(10, 10, 10);
+	private GameRepository repository;
+
+	public Game execute(Long gameId) {
+		return repository.getOne(gameId).toDomain();
+	}
+
+	public GetGame(GameRepository gameRepository) {
+		this.repository = gameRepository;
 	}
 }

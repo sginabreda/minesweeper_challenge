@@ -5,6 +5,7 @@ import com.sginabreda.minesweeper.delivery.dto.request.CellStatusChangeRequest;
 import com.sginabreda.minesweeper.delivery.dto.request.GameRequest;
 import com.sginabreda.minesweeper.delivery.dto.response.CellDto;
 import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
+import com.sginabreda.minesweeper.domain.entity.Game;
 import com.sginabreda.minesweeper.domain.exception.BadRequestException;
 import com.sginabreda.minesweeper.domain.usecase.ChangeCellStatus;
 import com.sginabreda.minesweeper.domain.usecase.CreateGame;
@@ -22,9 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Validated
 @RestController
-@RequestMapping("games")
+@RequestMapping(value = "/games",
+                produces = {"application/json"})
 public class GameResource implements GameController {
 
 	private final CreateGame createGame;
@@ -33,8 +37,7 @@ public class GameResource implements GameController {
 	private final ChangeCellStatus changeCellStatus;
 
 	@Override
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping(consumes = {"application/json"})
 	public GameDto createGame(@RequestBody GameRequest newGame) throws BadRequestException {
 		return createGame.execute(newGame).toDto();
 	}
@@ -43,14 +46,15 @@ public class GameResource implements GameController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<GameDto> listGames() {
-		return listGames.execute();
+		return listGames.execute().stream().map(Game::toDto).collect(toList());
 	}
 
 	@Override
-	@GetMapping("/{gameId}")
+	@GetMapping(value = "/{gameId}",
+	            produces = {"application/json"})
 	@ResponseStatus(HttpStatus.OK)
 	public GameDto getGame(@PathVariable Long gameId) {
-		return getGame.execute(gameId);
+		return getGame.execute(gameId).toDto();
 	}
 
 	@Override

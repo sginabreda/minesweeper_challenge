@@ -12,7 +12,10 @@ import java.util.List;
 public interface GameController {
 
 	GameDto createGame(@Valid GameRequest gameRequest) throws BadRequestException;
+
 	List<GameDto> listGames();
+
 	GameDto getGame(Long id);
+
 	CellDto changeCellStatus(Long gameId, Long cellId, @Valid CellStatusChangeRequest status);
 }
