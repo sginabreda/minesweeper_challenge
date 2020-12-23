@@ -4,5 +4,5 @@ public enum Status {
 	UNCLICKED,
 	REVEALED,
 	RED_FLAG,
-	QUESTION_MARK;
+	QUESTION_MARK
 }

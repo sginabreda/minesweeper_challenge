@@ -3,5 +3,7 @@ package com.sginabreda.minesweeper.domain.exception;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class GameFinishedException extends Exception {
+public class BadRequestException extends IllegalArgumentException {
+
+	private String message;
 }

@@ -18,5 +18,6 @@ public class GameRequest {
 	@Min(5)
 	@Max(10)
 	private Integer cols;
+	@Min(1)
 	private Integer mines;
 }

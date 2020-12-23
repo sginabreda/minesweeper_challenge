@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CellDto {
 
+	private Long id;
 	private Integer row;
 	private Integer col;
 	private String status;

@@ -5,6 +5,7 @@ import com.sginabreda.minesweeper.delivery.dto.request.CellStatusChangeRequest;
 import com.sginabreda.minesweeper.delivery.dto.request.GameRequest;
 import com.sginabreda.minesweeper.delivery.dto.response.CellDto;
 import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
+import com.sginabreda.minesweeper.domain.exception.BadRequestException;
 import com.sginabreda.minesweeper.domain.usecase.ChangeCellStatus;
 import com.sginabreda.minesweeper.domain.usecase.CreateGame;
 import com.sginabreda.minesweeper.domain.usecase.GetGame;
@@ -26,16 +27,16 @@ import java.util.List;
 @RequestMapping("games")
 public class GameResource implements GameController {
 
-	private CreateGame createGame;
-	private ListGames listGames;
-	private GetGame getGame;
-	private ChangeCellStatus changeCellStatus;
+	private final CreateGame createGame;
+	private final ListGames listGames;
+	private final GetGame getGame;
+	private final ChangeCellStatus changeCellStatus;
 
 	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public GameDto createGame(@RequestBody GameRequest newGame) {
-		return createGame.execute(newGame);
+	public GameDto createGame(@RequestBody GameRequest newGame) throws BadRequestException {
+		return createGame.execute(newGame).toDto();
 	}
 
 	@Override
