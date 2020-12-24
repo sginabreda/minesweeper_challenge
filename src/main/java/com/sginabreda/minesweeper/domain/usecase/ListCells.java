@@ -17,9 +17,9 @@ public class ListCells {
 	private final GameRepository gameRepository;
 	private final CellRepository cellRepository;
 
-	public List<Cell> execute(Long gameId) throws GameNotFoundException {
+	public List<Cell> invoke(Long gameId) throws GameNotFoundException {
 		Optional<GameModel> game = gameRepository.findById(gameId);
-		if (!game.isPresent()) {
+		if (game.isEmpty()) {
 			throw new GameNotFoundException();
 		}
 		return cellRepository.findAllByGame(game.get()).stream().map(CellModel::toDomain).collect(toList());

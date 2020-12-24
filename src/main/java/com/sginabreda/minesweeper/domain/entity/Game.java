@@ -20,7 +20,7 @@ public class Game {
 	private List<Cell> cells;
 
 	public GameDto toDto() {
-		return new GameDto(id, rows, cols, mines, cells.stream().map(Cell::toDto).collect(toList()));
+		return new GameDto(id, rows, cols, mines);
 	}
 
 	public GameModel toModel() {
@@ -34,6 +34,5 @@ public class Game {
 		this.cols = cols;
 		this.mines = mines;
 		this.cells = cells;
-
 	}
 }

@@ -19,5 +19,4 @@ public class GameDto {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
-	private List<CellDto> cells;
 }

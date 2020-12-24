@@ -19,7 +19,7 @@ public class CreateGame {
 	private final GameRepository repository;
 	private final CellRepository cellRepository;
 
-	public Game execute(GameRequest gameRequest) throws BadRequestException {
+	public Game invoke(GameRequest gameRequest) throws BadRequestException {
 		validateGame(gameRequest);
 		Game newGame = generateGame(gameRequest);
 		GameModel gameModel = repository.save(newGame.toModel());
@@ -37,7 +37,7 @@ public class CreateGame {
 
 	private Game generateGame(GameRequest game) {
 		List<Cell> cells = new ArrayList<>();
-		Long id = 1L;
+		long id = 1L;
 
 		for (int row = 1; row <= game.getRows(); row++) {
 			for (int col = 1; col <= game.getCols(); col++) {

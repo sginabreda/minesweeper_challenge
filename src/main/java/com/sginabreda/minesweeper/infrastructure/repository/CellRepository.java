@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface CellRepository extends JpaRepository<CellModel, Long> {
 
-	public List<CellModel> findAllByGame(GameModel gameModel);
+	List<CellModel> findAllByGame(GameModel gameModel);
 }

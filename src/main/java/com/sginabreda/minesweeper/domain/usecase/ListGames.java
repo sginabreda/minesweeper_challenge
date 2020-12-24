@@ -10,9 +10,9 @@ import static java.util.stream.Collectors.toList;
 
 public class ListGames {
 
-	private GameRepository gameRepository;
+	private final GameRepository gameRepository;
 
-	public List<Game> execute() {
+	public List<Game> invoke() {
 		return gameRepository.findAll().stream().map(GameModel::toDomain).collect(toList());
 	}
 

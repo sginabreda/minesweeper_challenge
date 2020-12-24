@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,35 +43,36 @@ public class GameResource implements GameController {
 	@Override
 	@PostMapping(consumes = {"application/json"})
 	public GameDto createGame(@RequestBody GameRequest newGame) throws BadRequestException {
-		return createGame.execute(newGame).toDto();
+		return createGame.invoke(newGame).toDto();
 	}
 
 	@Override
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<GameDto> listGames() {
-		return listGames.execute().stream().map(Game::toDto).collect(toList());
+		return listGames.invoke().stream().map(Game::toDto).collect(toList());
 	}
 
 	@Override
 	@GetMapping(value = "/{gameId}",
 	            produces = {"application/json"})
 	@ResponseStatus(HttpStatus.OK)
-	public GameDto getGame(@PathVariable Long gameId) {
-		return getGame.execute(gameId).toDto();
+	public GameDto getGame(@PathVariable Long gameId) throws GameNotFoundException {
+		return getGame.invoke(gameId).toDto();
 	}
 
 	@Override
 	public List<CellDto> listCells(Long gameId) throws GameNotFoundException {
-		return listCells.execute(gameId).stream().map(Cell::toDto).collect(toList());
+		return listCells.invoke(gameId).stream().map(Cell::toDto).collect(toList());
 	}
 
 	@Override
 	@GetMapping("/{gameId}/cells/{cellId}")
 	@ResponseStatus(HttpStatus.OK)
 	public CellDto changeCellStatus(
-			@PathVariable Long gameId, @PathVariable Long cellId, @RequestBody CellStatusChangeRequest status) {
-		return changeCellStatus.execute(gameId, cellId, status);
+			@PathVariable Long gameId,
+			@PathVariable Long cellId, @RequestBody CellStatusChangeRequest status) throws GameNotFoundException {
+		return changeCellStatus.invoke(gameId, cellId, status);
 	}
 
 	public GameResource(CreateGame createGame, ListGames listGames, GetGame getGame, ListCells listCells, ChangeCellStatus changeCellStatus) {

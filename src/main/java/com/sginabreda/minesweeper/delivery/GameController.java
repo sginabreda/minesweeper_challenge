@@ -16,9 +16,9 @@ public interface GameController {
 
 	List<GameDto> listGames();
 
-	GameDto getGame(Long id);
+	GameDto getGame(Long id) throws GameNotFoundException;
 
 	List<CellDto> listCells(Long gameId) throws GameNotFoundException;
 
-	CellDto changeCellStatus(Long gameId, Long cellId, @Valid CellStatusChangeRequest status);
+	CellDto changeCellStatus(Long gameId, Long cellId, @Valid CellStatusChangeRequest status) throws GameNotFoundException;
 }
