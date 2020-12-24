@@ -17,10 +17,11 @@ public class Game {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
+	private Integer revealedMines;
 	private List<Cell> cells;
 
 	public GameDto toDto() {
-		return new GameDto(id, rows, cols, mines);
+		return new GameDto(id, rows, cols, mines, revealedMines);
 	}
 
 	public GameModel toModel() {

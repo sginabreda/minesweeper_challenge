@@ -3,7 +3,9 @@ package com.sginabreda.minesweeper.infrastructure.repository.model;
 import com.sginabreda.minesweeper.domain.entity.Cell;
 import com.sginabreda.minesweeper.domain.enums.Status;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +21,8 @@ import javax.persistence.Table;
        schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class CellModel {
 
 	@Id
@@ -28,6 +32,7 @@ public class CellModel {
 	private Integer cellCol;
 	private String cellStatus;
 	private Integer adjacentMines;
+	private boolean hasMine;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "game_id",
 	            nullable = false)
@@ -42,6 +47,7 @@ public class CellModel {
 		this.cellCol = cellCol;
 		this.cellStatus = cellStatus;
 		this.adjacentMines = adjacentMines;
+		this.hasMine = false;
 		this.game = gameModel;
 	}
 }

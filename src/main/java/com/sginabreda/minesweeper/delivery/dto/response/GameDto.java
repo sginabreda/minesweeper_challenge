@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,4 +17,5 @@ public class GameDto {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
+	private Integer revealedMines;
 }

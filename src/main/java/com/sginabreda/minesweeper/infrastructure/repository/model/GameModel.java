@@ -2,6 +2,7 @@ package com.sginabreda.minesweeper.infrastructure.repository.model;
 
 import com.sginabreda.minesweeper.domain.entity.Game;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@Getter
 public class GameModel {
 
 	@Id
@@ -32,12 +34,13 @@ public class GameModel {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
+	private Integer revealedMines;
 	@OneToMany(fetch = FetchType.LAZY,
 	           mappedBy = "game")
 	private List<CellModel> cells;
 
 	public Game toDomain() {
-		return new Game(id, rows, cols, mines, cells.stream().map(CellModel::toDomain).collect(toList()));
+		return new Game(id, rows, cols, mines, revealedMines, cells.stream().map(CellModel::toDomain).collect(toList()));
 	}
 
 	public GameModel(Long id, Integer rows, Integer cols, Integer mines) {
@@ -45,5 +48,10 @@ public class GameModel {
 		this.rows = rows;
 		this.cols = cols;
 		this.mines = mines;
+		this.revealedMines = 0;
+	}
+
+	public boolean isStarted() {
+		return this.revealedMines != 0;
 	}
 }

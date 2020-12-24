@@ -8,7 +8,9 @@ import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
 import com.sginabreda.minesweeper.domain.entity.Cell;
 import com.sginabreda.minesweeper.domain.entity.Game;
 import com.sginabreda.minesweeper.domain.exception.BadRequestException;
+import com.sginabreda.minesweeper.domain.exception.CellNotFoundException;
 import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
+import com.sginabreda.minesweeper.domain.exception.RevealedCellException;
 import com.sginabreda.minesweeper.domain.usecase.ChangeCellStatus;
 import com.sginabreda.minesweeper.domain.usecase.CreateGame;
 import com.sginabreda.minesweeper.domain.usecase.GetGame;
@@ -71,8 +73,9 @@ public class GameResource implements GameController {
 	@ResponseStatus(HttpStatus.OK)
 	public CellDto changeCellStatus(
 			@PathVariable Long gameId,
-			@PathVariable Long cellId, @RequestBody CellStatusChangeRequest status) throws GameNotFoundException {
-		return changeCellStatus.invoke(gameId, cellId, status);
+			@PathVariable Long cellId, @RequestBody
+			CellStatusChangeRequest status) throws GameNotFoundException, CellNotFoundException, RevealedCellException {
+		return changeCellStatus.invoke(gameId, cellId, status).toDto();
 	}
 
 	public GameResource(CreateGame createGame, ListGames listGames, GetGame getGame, ListCells listCells, ChangeCellStatus changeCellStatus) {

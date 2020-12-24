@@ -5,5 +5,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BadRequestException extends IllegalArgumentException {
 
-	private String message;
+	private final String message;
 }
