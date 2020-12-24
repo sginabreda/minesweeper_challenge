@@ -18,8 +18,8 @@ public class GameConfiguration {
 	}
 
 	@Bean
-	public ListGames listGames() {
-		return new ListGames();
+	public ListGames listGames(GameRepository gameRepository) {
+		return new ListGames(gameRepository);
 	}
 
 	@Bean

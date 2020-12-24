@@ -1,12 +1,22 @@
 package com.sginabreda.minesweeper.domain.usecase;
 
-import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
+import com.sginabreda.minesweeper.domain.entity.Game;
+import com.sginabreda.minesweeper.infrastructure.repository.GameRepository;
+import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class ListGames {
 
-	public List<GameDto> execute() {
-		return List.of(new GameDto(10, 10, 10));
+	private GameRepository gameRepository;
+
+	public List<Game> execute() {
+		return gameRepository.findAll().stream().map(GameModel::toDomain).collect(toList());
+	}
+
+	public ListGames(GameRepository gameRepository) {
+		this.gameRepository = gameRepository;
 	}
 }
