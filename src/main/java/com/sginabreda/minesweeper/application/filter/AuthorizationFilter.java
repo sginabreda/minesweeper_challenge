@@ -23,8 +23,8 @@ import java.io.IOException;
 @Slf4j
 public class AuthorizationFilter extends HttpFilter {
 
-	private ObjectMapper mapper;
-	private JwtTokenUtil jwtTokenUtil;
+	private final ObjectMapper mapper;
+	private final JwtTokenUtil jwtTokenUtil;
 	private final String BEARER_PREFIX = "Bearer ";
 	private final String unauthorizedCode = "unauthorized";
 	private final Integer unauthorizedHttpStatus = HttpStatus.UNAUTHORIZED.value();

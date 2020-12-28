@@ -4,8 +4,13 @@ import com.sginabreda.minesweeper.delivery.dto.request.UserRequestDto;
 import com.sginabreda.minesweeper.delivery.dto.response.UserDto;
 import com.sginabreda.minesweeper.domain.entity.User;
 import com.sginabreda.minesweeper.infrastructure.repository.model.UserModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserMapper {
+
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public UserDto toDto(User user) {
 		UserDto userDto = new UserDto();
@@ -35,7 +40,7 @@ public class UserMapper {
 
 	public UserModel toModel(User user) {
 		UserModel userModel = new UserModel();
-		userModel.setPassword(user.getPassword());
+		userModel.setPassword(encoder.encode(user.getPassword()));
 		userModel.setUsername(user.getUsername());
 
 		return userModel;
