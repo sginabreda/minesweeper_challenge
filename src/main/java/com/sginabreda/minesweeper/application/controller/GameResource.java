@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -49,7 +50,7 @@ public class GameResource implements GameController {
 
 	@Override
 	@PostMapping(consumes = {"application/json"})
-	public GameDto createGame(@RequestBody GameRequest newGame) throws BadRequestException {
+	public GameDto createGame(@Valid @RequestBody GameRequest newGame) throws BadRequestException {
 		return gameMapper.toDto(createGame.invoke(newGame));
 	}
 

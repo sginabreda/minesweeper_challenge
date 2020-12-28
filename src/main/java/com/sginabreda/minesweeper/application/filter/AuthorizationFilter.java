@@ -42,9 +42,10 @@ public class AuthorizationFilter extends HttpFilter {
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
 			String authToken = request.getHeader(Header.AUTHORIZATION.label);
-			if (authToken.isBlank() || authToken.isEmpty()) {
+			if (authToken == null || authToken.isEmpty()) {
 				setApiErrorResponse(response, "Authorization token cannot be empty or null", "unauthorized",
 						HttpStatus.UNAUTHORIZED.value());
+				return;
 			}
 			DecodedJWT jwtToken = JWT.decode(authToken.replace(BEARER_PREFIX, ""));
 			jwtTokenUtil.validateToken(jwtToken);

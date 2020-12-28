@@ -4,6 +4,7 @@ import com.sginabreda.minesweeper.delivery.dto.ApiError;
 import com.sginabreda.minesweeper.domain.exception.BadRequestException;
 import com.sginabreda.minesweeper.domain.exception.CellNotFoundException;
 import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,11 @@ public class MinesweeperExceptionHandler extends ResponseEntityExceptionHandler 
 	protected ResponseEntity handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ApiError error = new ApiError("internal.error", ex.getMessage());
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(value = {RequestException.class})
+	public ResponseEntity<ApiError> handleRequestException(RequestException ex, WebRequest webRequest) {
+		ApiError apiError = new ApiError(ex.getCode(), ex.getMessage());
+		return new ResponseEntity<>(apiError, HttpStatus.valueOf(ex.getStatus()));
 	}
 }
