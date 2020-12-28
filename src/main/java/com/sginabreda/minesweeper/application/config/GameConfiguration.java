@@ -1,4 +1,4 @@
-package com.sginabreda.minesweeper.config;
+package com.sginabreda.minesweeper.application.config;
 
 import com.sginabreda.minesweeper.domain.usecase.ChangeCellStatus;
 import com.sginabreda.minesweeper.domain.usecase.CreateGame;
