@@ -1,6 +1,5 @@
 package com.sginabreda.minesweeper.domain.mapper;
 
-import com.sginabreda.minesweeper.delivery.dto.request.GameRequest;
 import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
 import com.sginabreda.minesweeper.domain.entity.Game;
 import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
@@ -33,6 +32,7 @@ public class GameMapper {
 		gameModel.setCols(game.getCols());
 		gameModel.setRows(game.getRows());
 		gameModel.setMines(game.getMines());
+		gameModel.setRevealedMines(game.getRevealedMines());
 		gameModel.setCells(game.getCells().stream().map(cell -> cellMapper.toModel(cell, gameModel)).collect(toList()));
 
 		return gameModel;

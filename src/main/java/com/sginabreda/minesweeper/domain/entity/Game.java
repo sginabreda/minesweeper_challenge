@@ -1,15 +1,11 @@
 package com.sginabreda.minesweeper.domain.entity;
 
-import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
-import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Getter
 @Setter
