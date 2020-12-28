@@ -13,7 +13,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,15 +60,17 @@ public class JwtTokenUtil {
 
 	public UsernamePasswordAuthenticationToken getAuthentication(DecodedJWT jwtToken, UserDetails userDetails) {
 		Map<String, Claim> claims = getAllClaimsFromToken(jwtToken);
-		List<SimpleGrantedAuthority> authorities = claims.get(ROLE_CLAIM)
-				.asList(String.class)
-				.stream().map(claim -> new SimpleGrantedAuthority(claim))
-				.collect(toList());
+		List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+				new SimpleGrantedAuthority(claims.get(ROLE_CLAIM).asString()));
 
 		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
 	}
 
 	private boolean isTokenExpired(DecodedJWT jwtToken) {
 		return jwtToken.getExpiresAt().before(Calendar.getInstance().getTime());
+	}
+
+	public String getUsernameFromToken(DecodedJWT jwtToken) {
+		return jwtToken.getSubject();
 	}
 }

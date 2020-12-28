@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final ObjectMapper mapper = new ObjectMapper();
+	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	@Autowired
 	private UserService userService;
@@ -51,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/**").permitAll()
 				.and()
 				.antMatcher("/games/**")
-				.addFilterBefore(new AuthorizationFilter(mapper, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new AuthorizationFilter(mapper, jwtTokenUtil, userService), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.anyRequest().authenticated();
 	}

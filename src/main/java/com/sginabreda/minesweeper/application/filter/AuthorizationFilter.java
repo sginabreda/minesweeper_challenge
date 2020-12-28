@@ -7,11 +7,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sginabreda.minesweeper.config.context.Header;
 import com.sginabreda.minesweeper.delivery.dto.ApiError;
 import com.sginabreda.minesweeper.domain.exception.RequestException;
+import com.sginabreda.minesweeper.infrastructure.service.UserService;
 import com.sginabreda.minesweeper.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,13 +27,15 @@ public class AuthorizationFilter extends HttpFilter {
 
 	private final ObjectMapper mapper;
 	private final JwtTokenUtil jwtTokenUtil;
+	private final UserService userService;
 	private final String BEARER_PREFIX = "Bearer ";
 	private final String unauthorizedCode = "unauthorized";
 	private final Integer unauthorizedHttpStatus = HttpStatus.UNAUTHORIZED.value();
 
-	public AuthorizationFilter(ObjectMapper mapper, JwtTokenUtil jwtTokenUtil) {
+	public AuthorizationFilter(ObjectMapper mapper, JwtTokenUtil jwtTokenUtil, UserService userService) {
 		this.mapper = mapper;
 		this.jwtTokenUtil = jwtTokenUtil;
+		this.userService = userService;
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class AuthorizationFilter extends HttpFilter {
 			}
 			DecodedJWT jwtToken = JWT.decode(authToken.replace(BEARER_PREFIX, ""));
 			jwtTokenUtil.validateToken(jwtToken);
-			SecurityContextHolder.getContext().setAuthentication(jwtTokenUtil.getAuthentication(jwtToken, null));
+			setAuthentication(jwtToken);
 			log.info("JWT Token validated");
 		}
 		catch (RequestException e) {
@@ -71,5 +75,11 @@ public class AuthorizationFilter extends HttpFilter {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setStatus(httpStatus);
 		response.getWriter().write(mapper.writeValueAsString(error));
+	}
+
+	private void setAuthentication(DecodedJWT jwtToken) {
+		String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+		UserDetails userDetails = userService.loadUserByUsername(username);
+		SecurityContextHolder.getContext().setAuthentication(jwtTokenUtil.getAuthentication(jwtToken, userDetails));
 	}
 }

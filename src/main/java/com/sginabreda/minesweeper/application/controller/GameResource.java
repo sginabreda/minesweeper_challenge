@@ -17,6 +17,7 @@ import com.sginabreda.minesweeper.domain.usecase.GetGame;
 import com.sginabreda.minesweeper.domain.usecase.ListCells;
 import com.sginabreda.minesweeper.domain.usecase.ListGames;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping(value = "/games",
                 produces = {"application/json"})
+@PreAuthorize("hasRole('PLAYER')")
 public class GameResource implements GameController {
 
 	private final CreateGame createGame;
