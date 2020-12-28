@@ -8,5 +8,5 @@ public interface UserController {
 
 	UserDto createUser(UserRequestDto newUser);
 
-	JwtTokenDto login(UserRequestDto user);
+	JwtTokenDto generateToken(UserRequestDto user);
 }
