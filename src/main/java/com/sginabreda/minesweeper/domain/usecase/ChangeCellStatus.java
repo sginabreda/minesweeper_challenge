@@ -56,9 +56,11 @@ public class ChangeCellStatus {
 	}
 
 	private void changeCellStatus(CellModel cell, Status status) throws RevealedCellException {
-		if (cell.getCellStatus() == Status.REVEALED.name()) {
+		if (cell.getCellStatus().equals(Status.REVEALED.name())) {
 			throw new RevealedCellException();
 		}
+		// TODO if the status is revealed and the cell has a mine -> end?
+		// TODO
 	}
 
 	private void updateGameAndCell() {

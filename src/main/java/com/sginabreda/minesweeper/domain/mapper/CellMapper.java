@@ -10,6 +10,7 @@ public class CellMapper {
 
 	public CellModel toModel(Cell cell, GameModel gameModel) {
 		CellModel cellModel = new CellModel();
+		cellModel.setId(cell.getId());
 		cellModel.setCellRow(cell.getRow());
 		cellModel.setCellCol(cell.getCol());
 		cellModel.setCellStatus(cell.getStatus().name());

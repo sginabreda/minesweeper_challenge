@@ -9,6 +9,8 @@ import com.sginabreda.minesweeper.util.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class UserConfiguration {
@@ -24,7 +26,12 @@ public class UserConfiguration {
 	}
 
 	@Bean
-	public UserMapper userMapper() {
-		return new UserMapper();
+	public UserMapper userMapper(PasswordEncoder passwordEncoder) {
+		return new UserMapper(passwordEncoder);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
