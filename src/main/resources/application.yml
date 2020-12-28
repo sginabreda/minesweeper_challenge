@@ -21,3 +21,5 @@ logging:
 server:
   servlet:
     context-path: "/api"
+jwt:
+  secret: "minesweeper_application"
