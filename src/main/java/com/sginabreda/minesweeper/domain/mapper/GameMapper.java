@@ -15,15 +15,6 @@ public class GameMapper {
 		this.cellMapper = cellMapper;
 	}
 
-	public Game toDomain(GameRequest gameRequest) {
-		Game game = new Game();
-		game.setCols(gameRequest.getCols());
-		game.setRows(gameRequest.getRows());
-		game.setMines(gameRequest.getMines());
-
-		return game;
-	}
-
 	public Game toDomain(GameModel gameModel) {
 		Game game = new Game();
 		game.setId(gameModel.getId());

@@ -1,6 +1,5 @@
 package com.sginabreda.minesweeper.infrastructure.repository.model;
 
-import com.sginabreda.minesweeper.domain.entity.Game;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Entity
 @Table(name = "games",
