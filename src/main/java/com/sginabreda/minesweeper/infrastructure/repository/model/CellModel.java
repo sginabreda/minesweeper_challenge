@@ -38,10 +38,6 @@ public class CellModel {
 	            nullable = false)
 	private GameModel game;
 
-	public Cell toDomain() {
-		return new Cell(id, cellRow, cellCol, Status.valueOf(cellStatus), adjacentMines);
-	}
-
 	public CellModel(Integer cellRow, Integer cellCol, String cellStatus, Integer adjacentMines, GameModel gameModel) {
 		this.cellRow = cellRow;
 		this.cellCol = cellCol;

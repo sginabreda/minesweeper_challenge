@@ -6,11 +6,12 @@ import com.sginabreda.minesweeper.delivery.dto.request.GameRequest;
 import com.sginabreda.minesweeper.delivery.dto.response.CellDto;
 import com.sginabreda.minesweeper.delivery.dto.response.GameDto;
 import com.sginabreda.minesweeper.domain.entity.Cell;
-import com.sginabreda.minesweeper.domain.entity.Game;
 import com.sginabreda.minesweeper.domain.exception.BadRequestException;
 import com.sginabreda.minesweeper.domain.exception.CellNotFoundException;
 import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
 import com.sginabreda.minesweeper.domain.exception.RevealedCellException;
+import com.sginabreda.minesweeper.domain.mapper.CellMapper;
+import com.sginabreda.minesweeper.domain.mapper.GameMapper;
 import com.sginabreda.minesweeper.domain.usecase.ChangeCellStatus;
 import com.sginabreda.minesweeper.domain.usecase.CreateGame;
 import com.sginabreda.minesweeper.domain.usecase.GetGame;
@@ -43,18 +44,20 @@ public class GameResource implements GameController {
 	private final GetGame getGame;
 	private final ListCells listCells;
 	private final ChangeCellStatus changeCellStatus;
+	private final GameMapper gameMapper;
+	private final CellMapper cellMapper;
 
 	@Override
 	@PostMapping(consumes = {"application/json"})
 	public GameDto createGame(@RequestBody GameRequest newGame) throws BadRequestException {
-		return createGame.invoke(newGame).toDto();
+		return gameMapper.toDto(createGame.invoke(newGame));
 	}
 
 	@Override
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<GameDto> listGames() {
-		return listGames.invoke().stream().map(Game::toDto).collect(toList());
+		return listGames.invoke().stream().map(gameMapper::toDto).collect(toList());
 	}
 
 	@Override
@@ -62,12 +65,12 @@ public class GameResource implements GameController {
 	            produces = {"application/json"})
 	@ResponseStatus(HttpStatus.OK)
 	public GameDto getGame(@PathVariable Long gameId) throws GameNotFoundException {
-		return getGame.invoke(gameId).toDto();
+		return gameMapper.toDto(getGame.invoke(gameId));
 	}
 
 	@Override
 	public List<CellDto> listCells(Long gameId) throws GameNotFoundException {
-		return listCells.invoke(gameId).stream().map(Cell::toDto).collect(toList());
+		return listCells.invoke(gameId).stream().map(cellMapper::toDto).collect(toList());
 	}
 
 	@Override
@@ -77,14 +80,16 @@ public class GameResource implements GameController {
 			@PathVariable Long gameId,
 			@PathVariable Long cellId, @RequestBody
 			CellStatusChangeRequest status) throws GameNotFoundException, CellNotFoundException, RevealedCellException {
-		return changeCellStatus.invoke(gameId, cellId, status).toDto();
+		return cellMapper.toDto(changeCellStatus.invoke(gameId, cellId, status));
 	}
 
-	public GameResource(CreateGame createGame, ListGames listGames, GetGame getGame, ListCells listCells, ChangeCellStatus changeCellStatus) {
+	public GameResource(CreateGame createGame, ListGames listGames, GetGame getGame, ListCells listCells, ChangeCellStatus changeCellStatus, GameMapper gameMapper, CellMapper cellMapper) {
 		this.createGame = createGame;
 		this.listGames = listGames;
 		this.getGame = getGame;
 		this.listCells = listCells;
 		this.changeCellStatus = changeCellStatus;
+		this.gameMapper = gameMapper;
+		this.cellMapper = cellMapper;
 	}
 }

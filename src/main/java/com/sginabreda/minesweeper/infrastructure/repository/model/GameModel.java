@@ -39,10 +39,6 @@ public class GameModel {
 	           mappedBy = "game")
 	private List<CellModel> cells;
 
-	public Game toDomain() {
-		return new Game(id, rows, cols, mines, revealedMines, cells.stream().map(CellModel::toDomain).collect(toList()));
-	}
-
 	public GameModel(Long id, Integer rows, Integer cols, Integer mines) {
 		this.id = id;
 		this.rows = rows;
