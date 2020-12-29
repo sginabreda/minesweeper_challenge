@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
     implementation 'com.h2database:h2'
+    implementation 'org.postgresql:postgresql:42.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.auth0:java-jwt:3.8.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
