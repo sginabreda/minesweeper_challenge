@@ -24,8 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final ObjectMapper mapper = new ObjectMapper();
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	@Autowired
-	private UserService userService;
 
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -35,11 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override

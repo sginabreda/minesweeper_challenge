@@ -7,15 +7,18 @@ import com.sginabreda.minesweeper.infrastructure.repository.UserRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.model.UserModel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -68,5 +71,10 @@ public class UserService implements UserDetailsService {
 			log.info("Disabled user", e);
 			throw new RequestException("Disabled user", "disabled.user", HttpStatus.UNAUTHORIZED.value());
 		}
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder, PasswordEncoder passwordEncoder) throws Exception {
+		authenticationManagerBuilder.userDetailsService(this).passwordEncoder(passwordEncoder);
 	}
 }
