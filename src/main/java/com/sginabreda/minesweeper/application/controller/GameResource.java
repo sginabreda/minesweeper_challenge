@@ -50,6 +50,7 @@ public class GameResource implements GameController {
 
 	@Override
 	@PostMapping(consumes = {"application/json"})
+	@ResponseStatus(HttpStatus.CREATED)
 	public GameDto createGame(@Valid @RequestBody GameRequest newGame) throws BadRequestException {
 		return gameMapper.toDto(createGame.invoke(newGame));
 	}
@@ -70,7 +71,10 @@ public class GameResource implements GameController {
 	}
 
 	@Override
-	public List<CellDto> listCells(Long gameId) throws GameNotFoundException {
+	@GetMapping(value = "/{gameId}/cells",
+	            produces = {"application/json"})
+	@ResponseStatus(HttpStatus.OK)
+	public List<CellDto> listCells(@PathVariable Long gameId) throws GameNotFoundException {
 		return listCells.invoke(gameId).stream().map(cellMapper::toDto).collect(toList());
 	}
 
