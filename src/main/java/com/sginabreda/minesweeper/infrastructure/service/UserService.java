@@ -29,11 +29,11 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
-	private final AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-	public UserService(UserRepository userRepository, AuthenticationManager authenticationManager) {
+	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.authenticationManager = authenticationManager;
 	}
 
 	public UserModel save(UserModel userModel) {
