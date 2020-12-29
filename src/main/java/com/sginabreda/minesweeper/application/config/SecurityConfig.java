@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/**").permitAll()
 				.and()
 				.antMatcher("/games/**")
-				.addFilterBefore(new AuthorizationFilter(mapper, jwtTokenUtil, userService), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new AuthorizationFilter(mapper, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.anyRequest().authenticated();
 	}
