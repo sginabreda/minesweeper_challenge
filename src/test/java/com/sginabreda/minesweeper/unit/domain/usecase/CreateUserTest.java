@@ -2,6 +2,7 @@ package com.sginabreda.minesweeper.unit.domain.usecase;
 
 import com.sginabreda.minesweeper.delivery.dto.request.UserRequestDto;
 import com.sginabreda.minesweeper.domain.entity.User;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.domain.mapper.UserMapper;
 import com.sginabreda.minesweeper.domain.usecase.CreateUser;
 import com.sginabreda.minesweeper.infrastructure.repository.model.UserModel;
@@ -33,7 +34,7 @@ public class CreateUserTest {
 	}
 
 	@Test
-	void testCreateUser() {
+	void testCreateUser() throws RequestException {
 		// Given
 		givenUserRequest();
 		givenUserModel();

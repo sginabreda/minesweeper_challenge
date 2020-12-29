@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
-@Service
 public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
@@ -35,6 +34,10 @@ public class UserService implements UserDetailsService {
 
 	public UserModel save(UserModel userModel) {
 		return userRepository.save(userModel);
+	}
+
+	public Optional<UserModel> findByUserName(String username) {
+		return userRepository.findByUsername(username);
 	}
 
 	@SneakyThrows

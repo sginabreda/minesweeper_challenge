@@ -7,7 +7,7 @@ import com.sginabreda.minesweeper.domain.exception.RequestException;
 
 public interface UserController {
 
-	UserDto createUser(UserRequestDto newUser);
+	UserDto createUser(UserRequestDto newUser) throws RequestException;
 
 	JwtTokenDto generateToken(UserRequestDto user) throws RequestException;
 }

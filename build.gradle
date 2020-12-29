@@ -30,6 +30,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.auth0:java-jwt:3.8.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mock-server:mockserver-netty:3.10.8'
+    testImplementation 'org.mock-server:mockserver-client-java:3.10.8'
 }
 
 test {

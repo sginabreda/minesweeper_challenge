@@ -3,7 +3,7 @@ package com.sginabreda.minesweeper.domain.exception;
 import lombok.Getter;
 
 @Getter
-public class RequestException extends Exception {
+public class RequestException extends RuntimeException {
 
 	private String message;
 	private String code;
@@ -12,6 +12,7 @@ public class RequestException extends Exception {
 	public RequestException(String message, String code, Integer status) {
 		super(message);
 		this.code = code;
+		this.message = message;
 		this.status = status;
 	}
 }

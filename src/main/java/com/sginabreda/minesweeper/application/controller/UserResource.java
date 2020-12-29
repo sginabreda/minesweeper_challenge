@@ -34,7 +34,7 @@ public class UserResource implements UserController {
 	@Override
 	@PostMapping(consumes = {"application/json"})
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserDto createUser(@RequestBody UserRequestDto newUser) {
+	public UserDto createUser(@RequestBody UserRequestDto newUser) throws RequestException {
 		return userMapper.toDto(createUser.invoke(newUser));
 	}
 
