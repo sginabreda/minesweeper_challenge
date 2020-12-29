@@ -29,9 +29,4 @@ public class UserConfiguration {
 	public UserMapper userMapper(PasswordEncoder passwordEncoder) {
 		return new UserMapper(passwordEncoder);
 	}
-
-	@Bean
-	public UserService userService(UserRepository userRepository, AuthenticationManager authenticationManager) {
-		return new UserService(userRepository, authenticationManager);
-	}
 }
