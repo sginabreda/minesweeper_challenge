@@ -8,7 +8,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     initialization-mode: never
   jpa:
-    database: h2
+    database: postgresql
     show-sql: false
     hibernate:
       ddl-auto: create

@@ -10,7 +10,6 @@ import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.infrastructure.service.UserService;
 import com.sginabreda.minesweeper.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,15 +25,15 @@ import java.io.IOException;
 @Slf4j
 public class AuthorizationFilter extends HttpFilter {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	private final ObjectMapper mapper;
 	private final JwtTokenUtil jwtTokenUtil;
 	private final String BEARER_PREFIX = "Bearer ";
 	private final String unauthorizedCode = "unauthorized";
 	private final Integer unauthorizedHttpStatus = HttpStatus.UNAUTHORIZED.value();
 
-	public AuthorizationFilter(ObjectMapper mapper, JwtTokenUtil jwtTokenUtil) {
+	public AuthorizationFilter(UserService userService, ObjectMapper mapper, JwtTokenUtil jwtTokenUtil) {
+		this.userService = userService;
 		this.mapper = mapper;
 		this.jwtTokenUtil = jwtTokenUtil;
 	}
