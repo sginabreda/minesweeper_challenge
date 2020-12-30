@@ -2,7 +2,7 @@ package com.sginabreda.minesweeper.unit.domain.usecase;
 
 import com.sginabreda.minesweeper.domain.entity.Cell;
 import com.sginabreda.minesweeper.domain.enums.Status;
-import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.domain.mapper.CellMapper;
 import com.sginabreda.minesweeper.domain.usecase.ListCells;
 import com.sginabreda.minesweeper.infrastructure.repository.CellRepository;
@@ -40,7 +40,7 @@ public class ListCellsTest {
 	}
 
 	@Test
-	void testListCells() throws GameNotFoundException {
+	void testListCells() throws RequestException {
 		// Given
 		givenGameModel();
 		givenCellModel();
@@ -61,7 +61,7 @@ public class ListCellsTest {
 		when(gameRepository.findById(gameId)).thenReturn(Optional.empty());
 
 		// Then
-		assertThrows(GameNotFoundException.class, () -> listCells.invoke(gameId));
+		assertThrows(RequestException.class, () -> listCells.invoke(gameId));
 	}
 
 	private void givenGameModel() {

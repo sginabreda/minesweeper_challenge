@@ -1,7 +1,7 @@
 package com.sginabreda.minesweeper.unit.domain.usecase;
 
 import com.sginabreda.minesweeper.domain.entity.Game;
-import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.domain.mapper.CellMapper;
 import com.sginabreda.minesweeper.domain.mapper.GameMapper;
 import com.sginabreda.minesweeper.domain.usecase.GetGame;
@@ -34,7 +34,7 @@ public class GetGameTest {
 	}
 
 	@Test
-	void testGetGame() throws GameNotFoundException {
+	void testGetGame() throws RequestException {
 		// Given
 		givenGameModel();
 
@@ -53,7 +53,7 @@ public class GetGameTest {
 		when(gameRepository.findById(gameId)).thenReturn(Optional.empty());
 
 		// Then
-		assertThrows(GameNotFoundException.class, () -> getGame.invoke(gameId));
+		assertThrows(RequestException.class, () -> getGame.invoke(gameId));
 	}
 
 	private void givenGameModel() {

@@ -3,13 +3,12 @@ package com.sginabreda.minesweeper.domain.usecase;
 import com.sginabreda.minesweeper.delivery.dto.request.CellStatusChangeRequest;
 import com.sginabreda.minesweeper.domain.entity.Cell;
 import com.sginabreda.minesweeper.domain.enums.Status;
-import com.sginabreda.minesweeper.domain.exception.CellNotFoundException;
-import com.sginabreda.minesweeper.domain.exception.GameNotFoundException;
-import com.sginabreda.minesweeper.domain.exception.RevealedCellException;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.infrastructure.repository.CellRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.GameRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.model.CellModel;
 import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +24,14 @@ public class ChangeCellStatus {
 		this.gameRepository = gameRepository;
 	}
 
-	public Cell invoke(Long gameId, Long cellId, CellStatusChangeRequest changeRequest) throws GameNotFoundException, CellNotFoundException, RevealedCellException {
+	public Cell invoke(Long gameId, Long cellId, CellStatusChangeRequest changeRequest) throws RequestException {
 		Optional<GameModel> game = gameRepository.findById(gameId);
 		Optional<CellModel> cell = cellRepository.findById(cellId);
 		Status status = Status.valueOf(changeRequest.getStatus().toUpperCase());
 		if (game.isEmpty()) {
-			throw new GameNotFoundException();
+			throw new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value());
 		} else if (cell.isEmpty()) {
-			throw new CellNotFoundException();
+			throw new RequestException("Cell not found", "not.found", HttpStatus.NOT_FOUND.value());
 		}
 		if (! game.get().isStarted()) {
 			generateMines(game.get(), cellId);
@@ -55,9 +54,9 @@ public class ChangeCellStatus {
 		cellRepository.saveAll(cells);
 	}
 
-	private void changeCellStatus(CellModel cell, Status status) throws RevealedCellException {
+	private void changeCellStatus(CellModel cell, Status status) throws RequestException {
 		if (cell.getCellStatus().equals(Status.REVEALED.name())) {
-			throw new RevealedCellException();
+			throw new RequestException("Cell is already revealed", "cell.revealed", HttpStatus.BAD_REQUEST.value());
 		}
 		// TODO if the status is revealed and the cell has a mine -> end?
 		// TODO

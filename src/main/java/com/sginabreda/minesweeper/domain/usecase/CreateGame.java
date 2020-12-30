@@ -4,12 +4,13 @@ import com.sginabreda.minesweeper.delivery.dto.request.GameRequest;
 import com.sginabreda.minesweeper.domain.entity.Cell;
 import com.sginabreda.minesweeper.domain.entity.Game;
 import com.sginabreda.minesweeper.domain.enums.Status;
-import com.sginabreda.minesweeper.domain.exception.BadRequestException;
+import com.sginabreda.minesweeper.domain.exception.RequestException;
 import com.sginabreda.minesweeper.domain.mapper.CellMapper;
 import com.sginabreda.minesweeper.domain.mapper.GameMapper;
 import com.sginabreda.minesweeper.infrastructure.repository.CellRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.GameRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class CreateGame {
 		this.cellMapper = cellMapper;
 	}
 
-	public Game invoke(GameRequest gameRequest) throws BadRequestException {
+	public Game invoke(GameRequest gameRequest) throws RequestException {
 		validateGame(gameRequest);
 		Game newGame = generateGame(gameRequest);
 		GameModel gameModel = repository.save(gameMapper.toModel(newGame));
@@ -39,11 +40,12 @@ public class CreateGame {
 		return gameMapper.toDomain(gameModel);
 	}
 
-	private void validateGame(GameRequest game) throws BadRequestException {
+	private void validateGame(GameRequest game) throws RequestException {
 		Integer totalCellAmount = game.getCols() * game.getRows();
 
 		if (game.getMines() > totalCellAmount) {
-			throw new BadRequestException("Amount of mines is greater than amount of cells");
+			throw new RequestException("Amount of mines is greater than amount of cells", "bad.request",
+					HttpStatus.BAD_REQUEST.value());
 		}
 	}
 
