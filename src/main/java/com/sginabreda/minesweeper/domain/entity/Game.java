@@ -17,7 +17,7 @@ public class Game {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
-	private Integer revealedMines;
+	private Integer revealedCells;
 	private List<Cell> cells;
 
 	public Game(Integer rows, Integer cols, Integer mines, List<Cell> cells) {
@@ -25,5 +25,6 @@ public class Game {
 		this.cols = cols;
 		this.mines = mines;
 		this.cells = cells;
+		this.revealedCells = 0;
 	}
 }

@@ -31,7 +31,7 @@ public class GameModel {
 	private Integer rows;
 	private Integer cols;
 	private Integer mines;
-	private Integer revealedMines;
+	private Integer revealedCells;
 	@OneToMany(fetch = FetchType.LAZY,
 	           mappedBy = "game")
 	private List<CellModel> cells;
@@ -41,10 +41,14 @@ public class GameModel {
 		this.rows = rows;
 		this.cols = cols;
 		this.mines = mines;
-		this.revealedMines = 0;
+		this.revealedCells = 0;
 	}
 
 	public boolean isStarted() {
-		return this.revealedMines != 0;
+		return this.revealedCells != 0;
+	}
+
+	public void increaseRevealedCells() {
+		this.revealedCells++;
 	}
 }

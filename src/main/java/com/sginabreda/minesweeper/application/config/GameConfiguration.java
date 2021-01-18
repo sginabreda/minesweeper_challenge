@@ -31,13 +31,13 @@ public class GameConfiguration {
 	}
 
 	@Bean
-	public ChangeCellStatus changeCellStatus(GameRepository gameRepository, CellRepository cellRepository) {
-		return new ChangeCellStatus(gameRepository, cellRepository);
+	public ChangeCellStatus changeCellStatus(GameRepository gameRepository, CellRepository cellRepository, CellMapper cellMapper) {
+		return new ChangeCellStatus(gameRepository, cellRepository, cellMapper);
 	}
 
 	@Bean
-	public ListCells listCells(GameRepository gameRepository, CellRepository cellRepository, CellMapper cellMapper) {
-		return new ListCells(gameRepository, cellRepository, cellMapper);
+	public ListCells listCells(GameRepository gameRepository, CellMapper cellMapper) {
+		return new ListCells(gameRepository, cellMapper);
 	}
 
 	@Bean

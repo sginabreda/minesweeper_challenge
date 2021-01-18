@@ -20,7 +20,7 @@ public class GameMapper {
 		game.setCols(gameModel.getCols());
 		game.setRows(gameModel.getRows());
 		game.setMines(gameModel.getMines());
-		game.setRevealedMines(gameModel.getRevealedMines());
+		game.setRevealedCells(gameModel.getRevealedCells());
 		game.setCells(gameModel.getCells().stream().map(cellMapper::toDomain).collect(toList()));
 
 		return game;
@@ -32,7 +32,7 @@ public class GameMapper {
 		gameModel.setCols(game.getCols());
 		gameModel.setRows(game.getRows());
 		gameModel.setMines(game.getMines());
-		gameModel.setRevealedMines(game.getRevealedMines());
+		gameModel.setRevealedCells(game.getRevealedCells());
 		gameModel.setCells(game.getCells().stream().map(cell -> cellMapper.toModel(cell, gameModel)).collect(toList()));
 
 		return gameModel;
@@ -43,7 +43,7 @@ public class GameMapper {
 		gameDto.setId(game.getId());
 		gameDto.setCols(game.getCols());
 		gameDto.setRows(game.getRows());
-		gameDto.setRevealedMines(game.getRevealedMines());
+		gameDto.setRevealedCells(game.getRevealedCells());
 		gameDto.setMines(game.getMines());
 
 		return gameDto;

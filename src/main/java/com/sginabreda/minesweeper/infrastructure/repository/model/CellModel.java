@@ -46,4 +46,8 @@ public class CellModel {
 		this.hasMine = false;
 		this.game = gameModel;
 	}
+
+	public void increaseAdjacentMines() {
+		this.adjacentMines++;
+	}
 }

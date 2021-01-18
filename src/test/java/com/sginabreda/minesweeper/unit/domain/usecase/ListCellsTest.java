@@ -24,30 +24,25 @@ import static org.mockito.Mockito.when;
 public class ListCellsTest {
 
 	private GameRepository gameRepository;
-	private CellRepository cellRepository;
 	private ListCells listCells;
 
 	private GameModel gameModel;
-	private CellModel cellModel;
 	private final Long gameId = 1L;
 
 	@BeforeEach
 	void setUp() {
 		gameRepository = mock(GameRepository.class);
-		cellRepository = mock(CellRepository.class);
 		CellMapper cellMapper = new CellMapper();
-		listCells = new ListCells(gameRepository, cellRepository, cellMapper);
+		listCells = new ListCells(gameRepository, cellMapper);
 	}
 
 	@Test
 	void testListCells() throws RequestException {
 		// Given
 		givenGameModel();
-		givenCellModel();
 
 		// When
 		when(gameRepository.findById(gameId)).thenReturn(Optional.ofNullable(gameModel));
-		when(cellRepository.findAllByGame(gameModel)).thenReturn(Collections.singletonList(cellModel));
 		List<Cell> cells = listCells.invoke(gameId);
 
 		// Then
@@ -65,10 +60,7 @@ public class ListCellsTest {
 	}
 
 	private void givenGameModel() {
-		gameModel = new GameModel(1L, 5, 5, 5, 0, new ArrayList<>());
-	}
-
-	private void givenCellModel() {
-		cellModel = new CellModel(1L, 1, 1, Status.UNCLICKED.name(), 0, false, gameModel);
+		gameModel = new GameModel(1L, 5, 5, 5, 0,
+				List.of(new CellModel(1L, 1, 1, Status.UNCLICKED.name(), 0, false, gameModel)));
 	}
 }

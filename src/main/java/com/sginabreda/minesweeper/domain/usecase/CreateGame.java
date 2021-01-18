@@ -52,8 +52,8 @@ public class CreateGame {
 	private Game generateGame(GameRequest game) {
 		List<Cell> cells = new ArrayList<>();
 
-		for (int row = 1; row <= game.getRows(); row++) {
-			for (int col = 1; col <= game.getCols(); col++) {
+		for (int row = 0; row < game.getRows(); row++) {
+			for (int col = 0; col < game.getCols(); col++) {
 				cells.add(new Cell(row, col, Status.UNCLICKED, 0));
 			}
 		}

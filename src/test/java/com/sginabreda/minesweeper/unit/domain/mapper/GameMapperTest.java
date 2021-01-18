@@ -37,7 +37,7 @@ public class GameMapperTest {
 		assertEquals(gameModel.getId(), game.getId());
 		assertEquals(gameModel.getCols(), game.getCols());
 		assertEquals(gameModel.getRows(), game.getRows());
-		assertEquals(gameModel.getRevealedMines(), game.getRevealedMines());
+		assertEquals(gameModel.getRevealedCells(), game.getRevealedCells());
 		assertEquals(gameModel.getMines(), gameModel.getMines());
 		assertEquals(gameModel.getCells().size(), game.getCells().size());
 	}
@@ -55,7 +55,7 @@ public class GameMapperTest {
 		assertEquals(game.getId(), gameModel.getId());
 		assertEquals(game.getCols(), gameModel.getCols());
 		assertEquals(game.getRows(), gameModel.getRows());
-		assertEquals(game.getRevealedMines(), gameModel.getRevealedMines());
+		assertEquals(game.getRevealedCells(), gameModel.getRevealedCells());
 		assertEquals(game.getMines(), gameModel.getMines());
 		assertEquals(game.getCells().size(), gameModel.getCells().size());
 	}
@@ -73,7 +73,7 @@ public class GameMapperTest {
 		assertEquals(game.getId(), gameDto.getId());
 		assertEquals(game.getCols(), gameDto.getCols());
 		assertEquals(game.getRows(), gameDto.getRows());
-		assertEquals(game.getRevealedMines(), gameDto.getRevealedMines());
+		assertEquals(game.getRevealedCells(), gameDto.getRevealedCells());
 		assertEquals(game.getMines(), gameDto.getMines());
 	}
 }
