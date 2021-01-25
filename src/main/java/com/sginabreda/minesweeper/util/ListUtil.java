@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ListUtil {
 
-	public static <T> CellModel[][] generateGrid(List<CellModel> elements, Integer rows) {
+	public static CellModel[][] generateGrid(List<CellModel> elements, Integer rows) {
 		return Lists.partition(elements, rows)
 				.stream()
 				.map(lst -> lst.toArray(CellModel[]::new))

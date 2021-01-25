@@ -7,19 +7,16 @@ import com.sginabreda.minesweeper.infrastructure.repository.GameRepository;
 import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
 import org.springframework.http.HttpStatus;
 
-import java.util.Optional;
-
 public class GetGame {
 
 	private final GameRepository gameRepository;
 	private final GameMapper gameMapper;
 
 	public Game invoke(Long gameId) throws RequestException {
-		Optional<GameModel> gameModelOptional = gameRepository.findById(gameId);
-		if (gameModelOptional.isEmpty()) {
-			throw new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value());
-		}
-		return gameMapper.toDomain(gameModelOptional.get());
+		GameModel game = gameRepository.findById(gameId).orElseThrow(
+				() -> new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value()));
+
+		return gameMapper.toDomain(game);
 	}
 
 	public GetGame(GameRepository gameRepository, GameMapper gameMapper) {

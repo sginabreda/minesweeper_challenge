@@ -80,8 +80,7 @@ public class GameResource implements GameController {
 	@ResponseStatus(HttpStatus.OK)
 	public CellDto changeCellStatus(
 			@PathVariable Long gameId,
-			@PathVariable Long cellId, @RequestBody
-			CellStatusChangeRequest status) throws RequestException {
+			@PathVariable Long cellId, @RequestBody CellStatusChangeRequest status) throws RequestException {
 		return cellMapper.toDto(changeCellStatus.invoke(gameId, cellId, status));
 	}
 

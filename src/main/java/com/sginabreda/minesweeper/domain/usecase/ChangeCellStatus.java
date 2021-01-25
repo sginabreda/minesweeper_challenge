@@ -27,20 +27,17 @@ public class ChangeCellStatus {
 	}
 
 	public Cell invoke(Long gameId, Long cellId, CellStatusChangeRequest changeRequest) throws RequestException {
-		Optional<GameModel> game = gameRepository.findById(gameId);
-		Optional<CellModel> cell = cellRepository.findById(cellId);
+		GameModel game = gameRepository.findById(gameId).orElseThrow(
+				() -> new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value()));
+		CellModel cell = cellRepository.findById(cellId).orElseThrow(
+				() -> new RequestException("Cell not found", "not.found", HttpStatus.NOT_FOUND.value()));
 		Status status = Status.valueOf(changeRequest.getStatus().toUpperCase());
-		if (game.isEmpty()) {
-			throw new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value());
-		} else if (cell.isEmpty()) {
-			throw new RequestException("Cell not found", "not.found", HttpStatus.NOT_FOUND.value());
+		CellModel[][] grid = ListUtil.generateGrid(game.getCells(), game.getRows());
+		if (! game.isStarted()) {
+			generateMines(game, grid, cellId);
 		}
-		CellModel[][] grid = ListUtil.generateGrid(game.get().getCells(), game.get().getRows());
-		if (! game.get().isStarted()) {
-			generateMines(game.get(), grid, cellId);
-		}
-		changeCellStatus(game.get(), grid, cell.get(), status);
-		return cellMapper.toDomain(cell.get());
+		changeCellStatus(game, grid, cell, status);
+		return cellMapper.toDomain(cell);
 	}
 
 	private void generateMines(GameModel gameModel, CellModel[][] grid, Long firstCell) {

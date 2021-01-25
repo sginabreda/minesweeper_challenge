@@ -8,7 +8,6 @@ import com.sginabreda.minesweeper.infrastructure.repository.model.GameModel;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,11 +17,10 @@ public class ListCells {
 	private final CellMapper cellMapper;
 
 	public List<Cell> invoke(Long gameId) throws RequestException {
-		Optional<GameModel> game = gameRepository.findById(gameId);
-		if (game.isEmpty()) {
-			throw new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value());
-		}
-		return game.get().getCells().stream().map(cellMapper::toDomain).collect(toList());
+		GameModel game = gameRepository.findById(gameId).orElseThrow(
+				() -> new RequestException("Game not found", "not.found", HttpStatus.NOT_FOUND.value()));
+
+		return game.getCells().stream().map(cellMapper::toDomain).collect(toList());
 	}
 
 	public ListCells(GameRepository gameRepository, CellMapper cellMapper) {
